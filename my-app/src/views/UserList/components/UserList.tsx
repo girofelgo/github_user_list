@@ -58,8 +58,7 @@ export function UserList(): React.ReactComponentElement<any> {
         } else if (prevPage > page || totalUserList.length > prevPage * perPage){
             dispatch(actions.setUserList(page, perPage));
         }
-    }, [page])
-
+    }, [page, perPage])
 
     const handlePageChange = (e: any, pageValue: number) => {
         if (pageValue > page) {
@@ -74,8 +73,6 @@ export function UserList(): React.ReactComponentElement<any> {
     const handlePerPageChange = (e: React.BaseSyntheticEvent) => {
         e.preventDefault();
         dispatch(actions.setPerPage(e.target.value))
-        dispatch(actions.setPage(initialState.page))
-        dispatch(actions.setPrevPage(initialState.prevPage))
     }
 
     const handleClick = (e: React.BaseSyntheticEvent) => {

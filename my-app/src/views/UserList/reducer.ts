@@ -34,6 +34,10 @@ export const userListReducer = (state = initialState, action: userListAction) =>
             return {
                 ...state,
                 perPage: action.perPage,
+                page: initialState.page,
+                prevPage: initialState.prevPage,
+                since: initialState.since,
+                totalUserList: initialState.totalUserList,
             };
         case userList.SET_USER_LIST:
             return {

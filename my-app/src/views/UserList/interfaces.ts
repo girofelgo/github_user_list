@@ -1,8 +1,11 @@
 export interface state {
     isLoading: boolean,
     userList: user[],
+    totalUserList: user[],
     page: number,
     perPage: number,
+    since: number,
+    prevPage: number,
 }
 
 export interface dispatch {
@@ -12,8 +15,8 @@ export interface dispatch {
 }
 
 export type fetchUserList = {
-    page: number,
     perPage: number,
+    since: number,
 }
 
 export type user = {

@@ -44,32 +44,51 @@ export function UserList(): React.ReactComponentElement<any> {
     const {
         userList,
         page,
+        prevPage,
         perPage,
         isLoading,
+        since,
+        totalUserList,
     } = useSelector((state: RootState) => state.userList);
 
     React.useEffect(() => {
-        dispatch(actions.fetchUserList({page: page, perPage: perPage}))
-    }, [page, perPage])
+        if (page > prevPage && totalUserList.length <= page * perPage) {
+            dispatch(actions.fetchUserList({perPage: perPage, since: since}));
+            dispatch(actions.setMaxPage(page));
+        } else if (prevPage > page || totalUserList.length > prevPage * perPage){
+            dispatch(actions.setUserList(page, perPage));
+        }
+    }, [page])
 
-    const handlePageChange = (e: any, page: number) => {
-        dispatch(actions.setPage(page + 1))
+
+    const handlePageChange = (e: any, pageValue: number) => {
+        if (pageValue > page) {
+            dispatch(actions.setPage(pageValue))
+            dispatch(actions.setPrevPage(page))
+        } else {
+            dispatch(actions.setPage(pageValue))
+            dispatch(actions.setPrevPage(page))
+        }
     }
 
     const handlePerPageChange = (e: React.BaseSyntheticEvent) => {
+        e.preventDefault();
         dispatch(actions.setPerPage(e.target.value))
         dispatch(actions.setPage(initialState.page))
+        dispatch(actions.setPrevPage(initialState.prevPage))
     }
 
     const handleClick = (e: React.BaseSyntheticEvent) => {
+        e.preventDefault();
         history.push(routes.USER_DETAILS.routeWithParams(e.currentTarget.value))
     }
 
     const classes = useStyles();
 
     return (
+        isLoading ? <Loader isLoading={isLoading}/>
+        :
             <div className={classes.root}>
-                <Loader isLoading={isLoading}/>
                 <List component="nav">
                     {userList.map((user: I.user) =>
                     <ListItem key={user.id}>
@@ -85,7 +104,7 @@ export function UserList(): React.ReactComponentElement<any> {
                     component="div"
                     // -1 means number of pages is not specified server side
                     count={-1}
-                    page={page - 1}
+                    page={page}
                     onChangePage={handlePageChange}
                     rowsPerPage={perPage}
                     onChangeRowsPerPage={handlePerPageChange}

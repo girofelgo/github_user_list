@@ -1,8 +1,11 @@
 import * as I from "./interfaces";
 
 export const initialState: I.state  = {
-    page: 1,
+    totalUserList: [],
+    since: 0,
+    page: 0,
     perPage: 10,
     userList: [],
-    isLoading: false
+    isLoading: false,
+    prevPage: -1,
 }

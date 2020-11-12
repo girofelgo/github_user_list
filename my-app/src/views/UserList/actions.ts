@@ -47,3 +47,26 @@ export function setPerPage(perPage: number): userListAction {
     };
 }
 
+export function setPrevPage(prevPage: number): userListAction {
+    return {
+        type: userList.SET_PREV_PAGE,
+        prevPage,
+    };
+}
+
+export function setUserList(page: number, perPage: number): userListAction {
+    return {
+        type: userList.SET_USER_LIST,
+        page,
+        perPage,
+    };
+}
+
+export function setMaxPage(maxPage: number): userListAction {
+    return {
+        type: userList.SET_MAX_PAGE,
+        maxPage,
+    };
+}
+
+

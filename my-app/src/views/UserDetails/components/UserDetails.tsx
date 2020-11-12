@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {Backdrop, CircularProgress, Link} from "@material-ui/core";
+import {Link} from "@material-ui/core";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -14,6 +14,7 @@ import {RootState} from "../../../rootReducer";
 import * as actions from "../../UserDetails/actions";
 import {history} from "../../../history";
 import * as routes from "../../../routes";
+import {Loader} from "../../../Loader";
 
 const useStyles = makeStyles({
     root: {
@@ -63,9 +64,7 @@ export function UserDetails(props: any): React.ReactComponentElement<any> {
 
     return(
         isLoading ?
-            <Backdrop open={isLoading}>
-                <CircularProgress color="inherit" />
-            </Backdrop>
+            <Loader isLoading={isLoading}/>
             :
         <Card className={classes.root}>
             <CardContent>
